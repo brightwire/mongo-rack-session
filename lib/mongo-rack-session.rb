@@ -9,10 +9,15 @@ module Rack
       VERSION = '0.1.1'
       class Session
         include MongoMapper::Document
+
         key "Id", String
         key :Expired, Boolean
+        key :HostAddress, String
+        key :LastAccessTime, Time
         key :StartTimestamp, Time
+        key :StopTimestamp, Time
         key :Timeout, Integer
+        key :Attributes, Hash
 
         def is_valid?
           if self.Timeout && self.StartTimestamp 
@@ -21,6 +26,42 @@ module Rack
             nil
           end
         end
+
+        def key?(k)
+          self if self.class.key?(k) # || @Attributes.key?(k)
+        end
+
+        def sort_by(*args, &block)
+          flat_obj = send(:Attributes)
+          tmp_obj = {}
+          self.keys.each do |k,v|
+            unless k == "Attributes"
+              tmp_obj[k] = send(k.to_sym)
+            end
+          end
+          flat_obj.update tmp_obj
+
+          block.call(flat_obj)
+        end
+
+        def []=(k,val)
+          if k == 'flash'
+          elsif self.class.key?(k)
+            send("#{k}=".to_sym, val)
+          else
+            self.Attributes[k] = val
+          end
+        end
+        def [](k)
+          if k == 'flash'
+            @flash ||= ActionDispatch::Flash::FlashHash.new
+          elsif self.class.key?(k)
+            send(k.to_sym)
+          else
+            @Attributes[k]
+          end
+        end
+        
       end
 
       DEFAULT_OPTIONS = Abstract::ID::DEFAULT_OPTIONS.merge \
@@ -49,12 +90,14 @@ module Rack
       end
 
       def set_session(env, session_id, new_session, options)
-        new_session.save ? new_session.Id : nil
+        session = find_session(session_id)
+        (session && new_session && session.Id == new_session.Id && new_session.save) ? new_session.Id : nil
       end
 
       def find_session(sid)
         mongo_session = @@session_class.first(:conditions => {@@session_class_key => sid})
-        (mongo_session && mongo_session.is_valid?) || @@session_class.create(@@session_class_key => sid)
+        # Do not create a session for now...@@session_class.create(@@session_class_key => sid)
+        (mongo_session && mongo_session.is_valid?) ? mongo_session : nil
       end
 
       def generate_sid
@@ -63,3 +106,4 @@ module Rack
     end
   end
 end
+
