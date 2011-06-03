@@ -21,7 +21,7 @@ Jeweler::Tasks.new do |gem|
   gem.email = "david.g.yang@gmail.com"
   gem.authors = ["David Yang"]
   
-  gem.add_runtime_dependency 'mongo-mapper'
+  gem.add_runtime_dependency 'mongo_mapper'
   gem.add_runtime_dependency 'uuid'
   gem.add_runtime_dependency 'rack'
 end

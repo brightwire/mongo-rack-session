@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
     "README.rdoc",
     "Rakefile",
     "lib/mongo-rack-session.rb",
+    "mongo-rack-session.gemspec",
     "test/helper.rb",
     "test/test_mongo-rack-session.rb"
   ]
@@ -51,7 +52,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<jeweler>, ["~> 1.5.2"])
       s.add_development_dependency(%q<rcov>, [">= 0"])
       s.add_development_dependency(%q<ruby-debug>, [">= 0"])
-      s.add_runtime_dependency(%q<mongo-mapper>, [">= 0"])
+      s.add_runtime_dependency(%q<mongo_mapper>, [">= 0"])
       s.add_runtime_dependency(%q<uuid>, [">= 0"])
       s.add_runtime_dependency(%q<rack>, [">= 0"])
     else
@@ -65,7 +66,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<jeweler>, ["~> 1.5.2"])
       s.add_dependency(%q<rcov>, [">= 0"])
       s.add_dependency(%q<ruby-debug>, [">= 0"])
-      s.add_dependency(%q<mongo-mapper>, [">= 0"])
+      s.add_dependency(%q<mongo_mapper>, [">= 0"])
       s.add_dependency(%q<uuid>, [">= 0"])
       s.add_dependency(%q<rack>, [">= 0"])
     end
@@ -80,7 +81,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<jeweler>, ["~> 1.5.2"])
     s.add_dependency(%q<rcov>, [">= 0"])
     s.add_dependency(%q<ruby-debug>, [">= 0"])
-    s.add_dependency(%q<mongo-mapper>, [">= 0"])
+    s.add_dependency(%q<mongo_mapper>, [">= 0"])
     s.add_dependency(%q<uuid>, [">= 0"])
     s.add_dependency(%q<rack>, [">= 0"])
   end
