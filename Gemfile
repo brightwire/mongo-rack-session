@@ -16,6 +16,6 @@ end
 gem 'rack'
 gem 'mongo_mapper'
 gem 'i18n'
-gem 'bson_ext', '1.1.5'
+gem 'bson_ext'
 gem "uuid", :git => "git://github.com/assaf/uuid.git"
 
