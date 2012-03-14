@@ -67,7 +67,7 @@ module Rack
       DEFAULT_OPTIONS = Abstract::ID::DEFAULT_OPTIONS.merge \
         :mongo_db_name => 'shiro',
         :mongo_collection_name => 'Sessions',
-        :mongo_server => '10.0.0.82',
+        :mongo_server => 'mongohost',
         :default_key => 'JSESSIONID',  # cookie key
         :session_class_key => 'Id'
 
