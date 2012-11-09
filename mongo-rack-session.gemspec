@@ -5,13 +5,13 @@
 
 Gem::Specification.new do |s|
   s.name = "mongo-rack-session"
-  s.version = "0.1.2"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["David Yang"]
+  s.authors = ["BrightWire Engineering"]
   s.date = "2012-01-31"
   s.description = "longer description of your gem"
-  s.email = "david.g.yang@gmail.com"
+  s.email = "engineering@brightwire.com"
   s.extra_rdoc_files = [
     "LICENSE.txt",
     "README.rdoc"
@@ -28,7 +28,7 @@ Gem::Specification.new do |s|
     "test/helper.rb",
     "test/test_mongo-rack-session.rb"
   ]
-  s.homepage = "http://github.com/davidyang/mongo-rack-session"
+  s.homepage = "http://github.com/brightwire/mongo-rack-session"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
   s.rubygems_version = "1.8.15"
