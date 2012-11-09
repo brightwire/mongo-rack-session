@@ -85,19 +85,31 @@ module Rack
 
       def get_session(env, sid)
         sid ||= generate_sid
-        session = find_session(sid)
+        session = find_session(env, sid)
         [sid, session]
       end
 
       def set_session(env, session_id, new_session, options)
-        session = find_session(session_id)
+        session = find_session(env, session_id)
         (session && new_session && session.Id == new_session.Id && new_session.save) ? new_session.Id : nil
       end
 
-      def find_session(sid)
+      def find_session(env, sid)
         mongo_session = @@session_class.first(:conditions => {@@session_class_key => sid})
-        # Do not create a session for now...@@session_class.create(@@session_class_key => sid)
-        (mongo_session && mongo_session.is_valid?) ? mongo_session : nil
+
+        unless mongo_session.try(:is_valid?)
+          timestamp = Time.now
+          mongo_session = @@session_class.create(
+            :Id => sid,
+            :Expired => false,
+            :HostAddress => env['action_dispatch.remote_ip'].to_s,
+            :LastAccessTime => timestamp,
+            :StartTimestamp => timestamp,
+            :Timeout => 2592000000,
+            :Attributes => {"org.apache.shiro.subject.support.DefaultSubjectContext_AUTHENTICATED_SESSION_KEY" => false})
+        end
+
+        mongo_session
       end
 
       def generate_sid
